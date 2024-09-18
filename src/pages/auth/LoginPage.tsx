@@ -15,7 +15,6 @@ function Login() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
-        const user = userCredential.user;
         localStorage.setItem('user', JSON.stringify(userCredential))
         navigate("/");
       })
