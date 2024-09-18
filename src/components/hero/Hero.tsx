@@ -1,4 +1,3 @@
-import React from "react";
 import { FaListUl } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 const Hero = () => {

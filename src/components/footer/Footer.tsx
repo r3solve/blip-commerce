@@ -1,7 +1,6 @@
 import {
   CiFacebook,
   CiInstagram,
-  CiYoutube,
   CiLocationOn,
 } from "react-icons/ci";
 import { FaWhatsapp } from "react-icons/fa";

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { app } from "../../utils/firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
-import Banner from "../../components/banner/Banner";
 
 function Register() {
   const [email, setEmail] = useState("");

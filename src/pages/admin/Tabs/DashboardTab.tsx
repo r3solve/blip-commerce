@@ -1,4 +1,3 @@
-import React from "react";
 import { PiMoney } from "react-icons/pi";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { MdOutlinePendingActions } from "react-icons/md";

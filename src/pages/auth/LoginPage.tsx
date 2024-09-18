@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Banner from "../../components/banner/Banner";
 import { app } from "../../utils/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
@@ -17,6 +16,7 @@ function Login() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const user = userCredential.user;
+        localStorage.setItem('user', JSON.stringify(userCredential))
         navigate("/");
       })
       .catch((error) => {

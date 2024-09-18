@@ -1,6 +1,4 @@
-import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { GoHome } from "react-icons/go";
 import { RiHome6Line } from "react-icons/ri";
 import { CgNotes } from "react-icons/cg";
 import { HiOutlineShoppingBag, HiOutlineUsers } from "react-icons/hi2";

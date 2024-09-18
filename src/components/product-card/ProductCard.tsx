@@ -1,8 +1,6 @@
 import { ProductItem } from "../../components/products/Products";
-import { RiStarSFill } from "react-icons/ri";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import Store from "../../store/Store";
-import { Link } from "react-router-dom";
 const ProductCard = ({ products }: { products: ProductItem[] }) => {
   const { cartArray, addToCart, removeFromCart } = Store();
   const handleAddToCart = (cart: ProductItem) => {

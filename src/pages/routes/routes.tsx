@@ -1,5 +1,4 @@
-import React from 'react'
-import { Router, Routes, Route } from 'react-router-dom'
+import {  Routes, Route } from 'react-router-dom'
 import Home from '../home/Home';
 import ProductList from '../products-list/ProductList';
 import Footer from '../../components/footer/Footer';

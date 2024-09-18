@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaTrashAlt, FaEdit, FaPlus } from "react-icons/fa";
 
 // Define the ProductItem type
