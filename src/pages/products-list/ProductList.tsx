@@ -1,7 +1,9 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import ProductCard from "../../components/product-card/ProductCard";
-
+import NotFound from "../../components/404/NotFound";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
+import { useEffect, useState } from "react";
 export type ProductItem = {
   title: string;
   category: string;
@@ -14,7 +16,7 @@ export type ProductItem = {
 const product: ProductItem[] = [
   {
     title: "Amazon Echo (3rd generation)",
-    category: "appliances",
+    category: "electronics",
     quantity: 1,
     price: "52",
     image:
@@ -23,7 +25,7 @@ const product: ProductItem[] = [
   },
   {
     title: "IFB 30 L Convection Microwave Oven",
-    category: "appliances",
+    category: "electronics",
     quantity: 1,
     price: "239",
     image:
@@ -125,6 +127,40 @@ const product: ProductItem[] = [
 function ProductList() {
   const loc = useLocation();
   let pathList = `${loc.pathname}`.split("/");
+  const [filteredProduct, setFilter] = useState<ProductItem[]>([...product]);
+  const navigate = useNavigate();
+
+  let [searchParams] = useSearchParams();
+  const [searchString, setSearchString] = useState<string>("");
+
+
+  useEffect(() => {
+    const currentPath = pathList[2]; // Get the current category from the path
+    const filterProducts = () => {
+      let filtered = product.filter((each) => each.category === currentPath);
+
+      // Check if there's a search query
+      const searchQuery = searchParams.get("q");
+      if (searchQuery) {
+        filtered = filtered.filter((each) =>
+          each.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+
+      setFilter(filtered); 
+    };
+    filterProducts();
+  }, [loc.pathname, searchParams]); // Add searchParams as a dependency
+
+  const handleSearch = () => {
+    if (loc.pathname !== '/') {
+      navigate(`${loc.pathname}?q=` + searchString);
+
+    }
+    navigate(`/?q=` + searchString);
+
+  };
+
 
   return (
     <>
@@ -139,9 +175,32 @@ function ProductList() {
           <li>{pathList[2]}</li>
         </ul>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-        <ProductCard products={product} />
+      <IoMdArrowRoundBack
+        onClick={() => navigate("/")}
+        className=" lg:hidden m-4"
+        size={30}
+      />
+      <div className="mx-auto xl:hidden lg:hidden md:hidden  flex justify-center items-center w-full p-4 h-32">
+        <input
+          type="text"
+          onChange={(e) => setSearchString(e.target.value)}
+          placeholder="Search products and categories"
+          className="flex-1 h-10 rounded-sm p-4  text-black outline-none  active:ring-red-300 active:outline-red-300 "
+        />
+        <button
+          onClick={handleSearch}
+          className="flex mx-2 items-center h-10 rounded-sm px-3 py-4 text-white bg-red-500"
+        >
+          <CiSearch />
+        </button>
       </div>
+      {filteredProduct.length > 0 ? (
+        <div className="grid lg:gap-10 grid-cols-2 mt-8  md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 ">
+          <ProductCard products={filteredProduct} />
+        </div>
+      ) : (
+        <NotFound />
+      )}
     </>
   );
 }

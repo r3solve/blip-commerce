@@ -1,5 +1,3 @@
-import React from 'react'
-import { RiMenuLine } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa";
 import { LuPackage2 } from "react-icons/lu";
 import { Link, Outlet } from 'react-router-dom';

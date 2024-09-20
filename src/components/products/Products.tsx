@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../product-card/ProductCard";
-
+import { useLocation,  useSearchParams, useNavigate } from "react-router-dom";
+import NotFound from "../404/NotFound";
 
 export type ProductItem = {
   title: string;
@@ -123,20 +124,39 @@ const product: ProductItem[] = [
 ];
 
 const Products = () => {
-  const [productsArray, setProductArray] = useState(product);
+  const [productsArray, setProductArray] = useState<ProductItem[]>(product);
   const [activeFilter, setActiveFilter] = useState("all");
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const filterProducts = () => {
+      let filtered = [...product];
+      const currentPath = location.pathname.split("/")[2];
+      const searchQuery = searchParams.get("q");
+
+      if (currentPath && currentPath !== "all") {
+        filtered = filtered.filter(
+          (item) => item.category.toLowerCase() === currentPath.toLowerCase()
+        );
+      }
+
+      if (searchQuery) {
+        filtered = filtered.filter((item) =>
+          item.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+
+      setProductArray(filtered);
+    };
+
+    filterProducts();
+  }, [location.pathname, searchParams]);
 
   const handleFilter = (value: string) => {
     setActiveFilter(value);
-    if (value === "all") {
-      setProductArray(product);
-    } else {
-      setProductArray(
-        product.filter(
-          (product) => product.category.toLowerCase() === value.toLowerCase()
-        )
-      );
-    }
+    const navigate = useNavigate();
+    navigate(value === "all" ? "/products" : `/products/${value}`);
   };
 
   return (
@@ -175,9 +195,13 @@ const Products = () => {
           </li>
         </ul>
       </nav>
-      <div className="grid gap-8 pt-8 sm:grid-cols-2  md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-5 lg:place-content-center">
-        <ProductCard products={productsArray} />
-      </div>
+      {productsArray.length > 0 ? (
+        <div className="grid lg:gap-10 grid-cols-2 mt-8  md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 ">
+          <ProductCard products={productsArray} />
+        </div>
+      ) : (
+        <NotFound />
+      )}
     </main>
   );
 };

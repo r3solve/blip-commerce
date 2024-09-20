@@ -1,9 +1,10 @@
 import { FaListUl } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
+import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <div className="w-full flex items-center  bg-center lg:bg-top bg-fixed  bg-my-image h-[250px]">
-      {/* <img className="w-36 ml-40" src="/bplip2.jpeg" /> */}
+      {/* <img className="0w-36 ml-40" src="/bplip2.jpeg" /> */}
       <div className="w-full  lg:hidden flex items-center justify-center ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="bg-red-500 p-3 m-1">
@@ -14,17 +15,17 @@ const Hero = () => {
             className="dropdown-content bg-base-100 text-black menu rounded-sm z-[1] w-52 p-2 shadow"
           >
             <li>
-              <a>All</a>
+              <Link to='/'>All</Link>
             </li>
             <li>
-              <a>Fashion</a>
+              <Link to={'/category/fashion'}>Fashion</Link>
             </li>
             <li>
-              <a>Home Decor</a>
+              <Link to='/category/home-decor'>Home Decor</Link>
             </li>
-            <li>
+            <Link to='/category/electronics'>
               <a>Electronics</a>
-            </li>
+            </Link>
           </ul>
         </div>
         <input

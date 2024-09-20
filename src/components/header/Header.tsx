@@ -1,13 +1,12 @@
 import  { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation} from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { HiDesktopComputer, HiOutlineDesktopComputer } from "react-icons/hi";
+import {  HiOutlineDesktopComputer } from "react-icons/hi";
 import { IoBasketOutline } from "react-icons/io5";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import Store from "../../store/Store";
 import { FaListUl } from "react-icons/fa";
-import { useSearchParams , useLocation} from "react-router-dom";
 import { IoMenuOutline } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuPackage2 } from "react-icons/lu";
@@ -18,13 +17,11 @@ const Header = () => {
   const [nav, setNav] = useState(false);
   const [isLoggedIn, setLoggedIn] = useState(false);
   const { cartArray } = Store();
-  const [setSearchParams] = useSearchParams();
   const [searchString, setSearchString] = useState<string>("");
   const loc = useLocation()
   const navigate = useNavigate();
-  const search = () => {
-    setSearchParams({ q: searchString });
-  };
+  
+
   useEffect(()=> {
     const user = localStorage.getItem('user')
     if (user !== null) {
@@ -35,6 +32,9 @@ const Header = () => {
     }
 
   },[loc.pathname])
+  const handleSearch = () => {
+    navigate(`${loc.pathname}?q=`+searchString)
+  }
 
   const handleLogout = ()=> {
     setLoggedIn(false)
@@ -47,7 +47,7 @@ const Header = () => {
         <div className="items-center h-20 hidden px-8 py-4 text-white bg-black lg:flex">
           <Link to="/" className="flex items-center">
             <div className="lg:w-14 rounded-full">
-              <img className="" alt="blip logo" src="bplip2.jpeg" />
+              <img className="" alt="blip logo" src={"bplip2.jpeg"} />
             </div>
             <h1>
               {/* <span className="text-2xl ml-1 roboto-thin font-bold text-red-500"> */}
@@ -88,7 +88,7 @@ const Header = () => {
               className="flex-1 h-10 rounded-sm p-4 text-black outline-none "
             />
             <button
-              onClick={search}
+              onClick={handleSearch}
               className="flex mx-2 items-center h-10 rounded-sm px-3 py-4 text-white bg-red-500"
             >
               SEARCH
@@ -177,24 +177,24 @@ const Header = () => {
                     <LuPackage2 size={20} className="mr-2" /> Orders
                   </Link>
                 </li>
-                {!isLoggedIn ? (
+                {isLoggedIn ? (
                   <li className="flex my-1 items-center font-normal mx-auto w-full  bg-black    text-white rounded-sm cursor-pointer">
                     <a className="flex w-full justify-center p-2  bg-red-500 text-white items-center">
                       LOG OUT
                     </a>
                   </li>
                 ) : (
-                  <li className="flex my-1 items-center font-normal mx-auto w-full  bg-black    text-white rounded-sm cursor-pointer">
+                  <Link to='/accounts/signup' className="flex my-1 items-center font-normal mx-auto w-full  bg-black    text-white rounded-sm cursor-pointer">
                     <a className="flex w-full justify-center p-2  bg-red-500 text-white items-center">
                       REGISTER
                     </a>
-                  </li>
+                  </Link>
                 )}
                 <li className="h-8 border-t font-thin border-t-gray-700 w-full">
                   <span className="mx-3 ">CATEGORIES</span>
                 </li>
                 <li className="flex items-center font-thin w-auto p-2 text-white bg-black  rounded-sm cursor-pointer">
-                  <Link to="/profile/settings" className="flex items-center">
+                  <Link to="/" className="flex items-center">
                     <IoBasketOutline className="mr-1" /> Latest Products
                   </Link>
                 </li>

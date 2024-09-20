@@ -1,4 +1,4 @@
-import {  Routes, Route, useLocation } from 'react-router-dom'
+import {  Routes, Route } from 'react-router-dom'
 import Home from '../home/Home';
 import ProductList from '../products-list/ProductList';
 import Footer from '../../components/footer/Footer';
@@ -18,8 +18,6 @@ import ProtectedRoute from './ProtectedRoute';
 import { useState } from 'react';
 
 function RoutesLayout() {
-  const loc = useLocation();
-  
   const [isAuthenticated, setAuthenticated] = useState(false)
   useState(()=> {
     const user = localStorage.getItem('user')

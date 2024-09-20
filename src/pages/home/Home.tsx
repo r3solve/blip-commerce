@@ -1,5 +1,4 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "../../components/header/Header";
 import Hero from "../../components/hero/Hero";
 import Products from "../../components/products/Products";
 

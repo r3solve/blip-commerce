@@ -15,35 +15,34 @@ const ProductCard = ({ products }: { products: ProductItem[] }) => {
 
   return (
     <>
-    <ToastContainer theme="dark" />
       {products.map((product: ProductItem) => (
-        <div key={product.id} className="rounded-sm transition-all hover:scale-110 duration-150 hover:cursor-pointer  p-4 shadow-md lg:w-[240px] max-w-full lg:max-w-[250px]  ">
+        <div key={product.id} className="rounded-sm transition-all hover:scale-110 duration-150 hover:cursor-pointer my-4 lg:my-1 lg:p-4 shadow-md lg:w-[240px] max-w-full lg:max-w-[250px]  ">
           <img
             src={product.image}
             alt="product"
             className="w-32 mx-auto rounded-lg h-28"
           />
           <div className="space-y-1 text-center pt-1 p-4">
-            <h3 className="text-md my-2 rubik-text font-normal first-letter:uppercase  h-14">
+            <h3 className="text-md md:my-2 lg:my-2 rubik-text font-normal first-letter:uppercase h-auto">
               {product.title}
             </h3>
 
             <div className=" flex text-lg flex-col text-center justify-between items-start">
-              <p className="text-md font-medium mx-auto rubik-text my-2">
-                <span className="text-sm rubik-text ">GH&#8373; </span>
+              <p className="text-md font-medium mx-auto rubik-text md:my-2 lg:my-2">
+                <span className="text-sm mt-4 rubik-text ">GH&#8373; </span>
                 {product.price}.00{" "}
               </p>
               {!cartArray.find((item) => item.id === product.id) ? (
                 <button
-                  onClick={() => handleAddToCart(product)}
-                  className="my-1 w-full hover:bg-red-200 mx-auto bg-red-500 text-white flex items-center p-2 rounded-sm justify-center"
+                onClick={() => handleAddToCart(product)}
+                className="my-1 w-full hover:bg-red-200 mx-auto bg-red-500 text-white flex items-center p-2 rounded-sm justify-center"
                 >
                   <AiOutlineShoppingCart className="mr-2" /> Add
                 </button>
               ) : (
                 <button
-                  onClick={() => removeFromCart(product.id)}
-                  className="my-1 flex items-center p-2 rounded-md mx-auto justify-center"
+                onClick={() => removeFromCart(product.id)}
+                className="my-1 flex items-center p-2 rounded-md mx-auto justify-center"
                 >
                   <AiOutlineShoppingCart className="mr-2" /> Remove
                 </button>
@@ -52,6 +51,7 @@ const ProductCard = ({ products }: { products: ProductItem[] }) => {
           </div>
         </div>
       ))}
+      <ToastContainer theme="dark" />
     </>
   );
 };
