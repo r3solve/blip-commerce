@@ -18,12 +18,14 @@ import ProtectedRoute from './ProtectedRoute';
 import { useState } from 'react';
 
 function RoutesLayout() {
-useEffect(() => {
+const [isAuthenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
     const user = localStorage.getItem('user');
     if (user !== null) {
       setAuthenticated(true);
     }
-  }, [])
+  }, []); 
 
   return (
     <>
