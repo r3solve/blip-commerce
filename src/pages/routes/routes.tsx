@@ -23,6 +23,7 @@ useEffect(() => {
     if (user !== null) {
       setAuthenticated(true);
     }
+  }, [])
 
   return (
     <>
