@@ -15,7 +15,7 @@ const Footer = () => {
       className=" mt-8  bg-black text-gray-50 p-8  grid grid-cols-1 px-5 pb-4 mx-auto lg:flex lg:justify-between sm:grid-cols-2 gap-y-10 lg:gap-y-0 lg:px-10"
     >
       <div>
-        <h1 className="text-3xl text-red-500  font-bold">Blip Trading</h1>
+        <h1 className="text-3xl text-red-500 font-bold roboto-thin ">Blip Trading</h1>
         <ul className="space-y-4 font-light mt-4 cursor-pointer">
           <li className="flex items-center">
             <AiOutlineMail className="mr-2 " /> you.shop@gmail.com
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
       </div>
       <div>
-        <h1 className=" text-lg  font-medium ">Company</h1>
+        <h1 className=" text-lg  font-medium roboto-thin ">Company</h1>
         <ul className="space-y-5 mt-4 font-light  cursor-pointer">
           <li>About Us</li>
           <li>Services</li>

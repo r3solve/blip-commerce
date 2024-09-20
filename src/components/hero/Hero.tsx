@@ -3,6 +3,7 @@ import { CiSearch } from "react-icons/ci";
 const Hero = () => {
   return (
     <div className="w-full flex items-center  bg-center lg:bg-top bg-fixed  bg-my-image h-[250px]">
+      {/* <img className="w-36 ml-40" src="/bplip2.jpeg" /> */}
       <div className="w-full  lg:hidden flex items-center justify-center ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="bg-red-500 p-3 m-1">

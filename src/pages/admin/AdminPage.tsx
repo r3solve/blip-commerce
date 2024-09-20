@@ -5,33 +5,6 @@ import { HiOutlineShoppingBag, HiOutlineUsers } from "react-icons/hi2";
 function AdminPage() {
   return (
     <>
-      {/* Navigation Bar */}
-      <div className="navbar h-11 bg-[#131313] text-gray-100 ">
-        <div className="flex-1 ml-5">
-          <div className="w-14 rounded-full">
-            <img className="" alt="blip logo" src="/bplip2.jpeg" />
-          </div>
-        </div>
-        <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <a>Link</a>
-            </li>
-            <li>
-              <details>
-                <summary>Admin</summary>
-                <ul className="bg-red text-black rounded-t-none p-2">
-                  <li className="hover:cursor-pointer">
-                    <a>logout</a>
-                  </li>
-                  
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </div>
-      </div>
-
       {/* Main Content Area */}
       <div className="w-full flex h-screen flex-row">
         {/* Drawer for Sidebar Navigation */}
@@ -55,20 +28,34 @@ function AdminPage() {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-            <ul className="menu  bg-[#131313] font-light text-base text-white min-h-full w-80 p-4">
-              <NavLink to={"dashboard"} className="flex flex-row my-4">
+            <ul className="menu  bg-black font-light text-base text-white min-h-full w-80 p-4">
+              <NavLink
+                to={"dashboard"}
+                className="flex flex-row hover:bg-red-500 p-3"
+              >
                 <RiHome6Line className="" color="white" size={30} />
-                <a className="mt-1 mx-2">Dashboard</a>
+                <a className="mt-1 mx-2 roboto-thin text-lg font-medium ">
+                  Dashboard
+                </a>
               </NavLink>
-              <NavLink to={"orders"} className="flex flex-row my-4">
+              <NavLink
+                to={"orders"}
+                className="flex flex-row  p-3 hover:bg-red-500"
+              >
                 <CgNotes className="" color="white" size={30} />
-                <a className="mt-1 mx-2">Orders</a>
+                <a className="mx-2">Orders</a>
               </NavLink>
-              <NavLink to={"products"} className="flex flex-row my-4">
+              <NavLink
+                to={"products"}
+                className="flex flex-row  p-3 hover:bg-red-500"
+              >
                 <HiOutlineShoppingBag className="" color="white" size={30} />
                 <a className="mt-1 mx-2">Products</a>
               </NavLink>
-              <NavLink to={"customers"} className="flex flex-row my-4">
+              <NavLink
+                to={"customers"}
+                className="flex flex-row  p-3 hover:bg-red-500"
+              >
                 <HiOutlineUsers className="" color="white" size={30} />
                 <a className="mt-1 mx-2">Customers</a>
               </NavLink>

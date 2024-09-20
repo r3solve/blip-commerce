@@ -8,12 +8,17 @@ interface storeState {
   clearCart: () => void;
   incrementCart: () => void;
   removeFromCart: (item: number) => void;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (val:boolean) => void
+
 }
 
 const Store = create<storeState>()(
   persist(
     (set) => ({
       cart: 0,
+      isLoggedIn:false,
+      setIsLoggedIn: (val:boolean) => set(()=> ({isLoggedIn:val})),
       cartArray: [],
       addToCart: (item: {}) =>
         set((state) => ({ cartArray: [...state.cartArray, item] })),
@@ -24,6 +29,7 @@ const Store = create<storeState>()(
           cartArray: state.cartArray.filter((item) => item.id !== itemId),
         })),
     }),
+    
     { name: "store" }
   )
 );

@@ -12,6 +12,10 @@ module.exports = {
       height: {
         "80vh": "80vh",
       },
+      fontFamily: {
+        'roboto':['robot', 'serif'],
+        'rubik': ['rubink', 'serif'],
+      },
       keyframes: {
         verticalBounce: {
           "0%, 100%": { transform: "translateX(0)" },

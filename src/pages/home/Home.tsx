@@ -7,7 +7,6 @@ const Home = () => {
   const loc = useLocation();
   return (
     <>
-      <Header />
       <div>
         {loc.pathname === "/" && (
           <>

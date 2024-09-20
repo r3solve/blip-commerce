@@ -1,4 +1,4 @@
-import {  Routes, Route } from 'react-router-dom'
+import {  Routes, Route, useLocation } from 'react-router-dom'
 import Home from '../home/Home';
 import ProductList from '../products-list/ProductList';
 import Footer from '../../components/footer/Footer';
@@ -10,8 +10,24 @@ import Register from '../auth/RegisterPage';
 import CustomersTab from '../admin/Tabs/CustomersTab';
 import OrdersTab from '../admin/Tabs/OrdersTab';
 import ProductsTab from '../admin/Tabs/ProductsTab';
+import ProfilePage from '../account/ProfilePage';
+import AccountPage from '../account/Tabs/AccountPage';
+import Orders from '../account/Tabs/Orders';
+import LogoutPage from '../auth/LogoutPage';
+import ProtectedRoute from './ProtectedRoute';
+import { useState } from 'react';
 
 function RoutesLayout() {
+  const loc = useLocation();
+  
+  const [isAuthenticated, setAuthenticated] = useState(false)
+  useState(()=> {
+    const user = localStorage.getItem('user')
+    if (user !== null) {
+      setAuthenticated(true)
+    }
+  },[])
+
   return (
     <>
     <Routes>
@@ -19,6 +35,11 @@ function RoutesLayout() {
         <Route path="category/" element={<ProductList />}>
           <Route path=":category" element={<ProductList />} />
         </Route>
+      </Route>
+      <Route path='profile' element={<ProtectedRoute state={isAuthenticated} element={<ProfilePage />} />}>
+        <Route path='settings' element={<AccountPage />} />
+        <Route path='orders' element={<Orders />} />
+
       </Route>
       <Route path='/admin' element={<AdminPage />}>
             <Route path='dashboard' index element={<DashboardTab/>} />
@@ -29,6 +50,7 @@ function RoutesLayout() {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/accounts/login" element={<Login />}></Route>
           <Route path="/accounts/signup" element={<Register />}></Route>
+          <Route path='accounts/logout' element={<LogoutPage />} />
         </Routes>
      <Footer />
     </>

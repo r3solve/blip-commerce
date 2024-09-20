@@ -1,34 +1,61 @@
-import  { useState } from "react";
+import  { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CiMenuBurger } from "react-icons/ci";
-import { TfiClose } from "react-icons/tfi";
+import { IoClose } from "react-icons/io5";
+import { HiDesktopComputer, HiOutlineDesktopComputer } from "react-icons/hi";
+import { IoBasketOutline } from "react-icons/io5";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import Store from "../../store/Store";
 import { FaListUl } from "react-icons/fa";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams , useLocation} from "react-router-dom";
+import { IoMenuOutline } from "react-icons/io5";
+import { IoSettingsOutline } from "react-icons/io5";
+import { LuPackage2 } from "react-icons/lu";
+import { GiClothes } from "react-icons/gi";
+import { PiBuildingApartmentLight } from "react-icons/pi";
+
 const Header = () => {
   const [nav, setNav] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const { cartArray } = Store();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [setSearchParams] = useSearchParams();
   const [searchString, setSearchString] = useState<string>("");
+  const loc = useLocation()
   const navigate = useNavigate();
   const search = () => {
     setSearchParams({ q: searchString });
   };
+  useEffect(()=> {
+    const user = localStorage.getItem('user')
+    if (user !== null) {
+      const parse_user_data = JSON.parse(user)
+      if (parse_user_data.user.email) {
+        setLoggedIn(true)
+      }
+    }
+
+  },[loc.pathname])
+
+  const handleLogout = ()=> {
+    setLoggedIn(false)
+    localStorage.removeItem('user')
+    navigate('/')
+  }
   return (
     <>
       <nav className="">
         <div className="items-center h-20 hidden px-8 py-4 text-white bg-black lg:flex">
           <Link to="/" className="flex items-center">
-            <div className="w-14 rounded-full">
+            <div className="lg:w-14 rounded-full">
               <img className="" alt="blip logo" src="bplip2.jpeg" />
             </div>
-            {/* <BsCart4 className="w-8 h-8 mx-2 text-red-500" /> */}
             <h1>
-              <span className="text-2xl mx-4 font-bold text-red-500">
-                Blip{" "}
-              </span>
+              {/* <span className="text-2xl ml-1 roboto-thin font-bold text-red-500"> */}
+              <span className="oleo-logo text-red-500 mx-2">Blip</span>
+              <span className="mt-3 roboto-thin text-xl font-bold text-red-500">
+                Trading
+              </span>{" "}
+              {/* </span> */}
             </h1>
           </Link>
           <div className="flex flex-1 items-center px-[3rem] ">
@@ -68,12 +95,42 @@ const Header = () => {
             </button>
           </div>
           <div className="flex">
-            <Link to="/accounts/login">
-              <div className="flex p-2 rounded-sm  w-50 items-center bg-red-500 mx-2">
-                <AiOutlineUser size={20} />
-                <h1 className=" ">SIGN IN</h1>
+            {!isLoggedIn ? (
+              <Link to="/accounts/login">
+                <div className="flex p-2 rounded-sm  w-50 items-center bg-red-500 mx-2">
+                  {/* <AiOutlineUser size={20} /> */}
+                  <h1 className=" ">SIGN IN</h1>
+                </div>
+              </Link>
+            ) : (
+              <div className="dropdown dropdown-bottom dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="flex p-2 rounded-sm  w-50 items-center bg-red-500 mx-2"
+                >
+                  <AiOutlineUser size={20} />
+                  ACCOUNT
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content space-y-4 menu text-black bg-base-100 rounded-md z-[1] w-52 p-2 shadow"
+                >
+                  <li className="mt-2">
+                    <Link to="/profile/settings">
+                      <AiOutlineUser size={20} />
+                      My Account
+                    </Link>
+                  </li>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-500 font-medium p-4 hover:cursor-pointer text-md mx-2 text-center hover:bg-red-200 rounded-sm  text-white"
+                  >
+                    LOGOUT
+                  </button>
+                </ul>
               </div>
-            </Link>
+            )}
 
             <div className="flex items-center mx-2">
               <Link to="/cart" className="flex items-center">
@@ -90,43 +147,91 @@ const Header = () => {
 
         {/* mobile */}
         <div className="flex items-center justify-between p-4 bg-black lg:hidden">
-          <Link to="/" className="flex items-center text-xl font-bold ">
-            <div className="w-11 mx-1 rounded-full">
-              <img alt="Tailwind CSS Navbar component" src="/bplip2.jpeg" />
-            </div>
-            <h1 className="text-white">Blip Trading</h1>
-          </Link>
-          <ul
-            onClick={() => setNav(!nav)}
-            className={`absolute top-[63px] z-20 bg-gray-50 items-center w-full left-0 py-10 text-sky h-80 ${
-              nav ? "block" : "hidden"
-            }`}
-          >
-            <div className="flex flex-col items-center text-lg h-96">
-              <li className="my-3">
-                <a href="/#product">Products</a>
-              </li>
-              <li className="my-3">
-                <Link to="/help">Help</Link>
-              </li>
-              <li className="flex my-3 items-center justify-center w-32 p-2 text-black bg-white rounded-full cursor-pointer">
-                <Link to="/accounts/login" className="flex items-center">
-                  <AiOutlineUser className="mr-2" /> Sign in
-                </Link>
-              </li>
-              <li className="flex my-3 items-center justify-center w-32 p-2 text-white bg-black rounded-full cursor-pointer">
-                <Link to="/cart" className="flex items-center">
-                  <AiOutlineShoppingCart className="mr-2" /> Cart
-                </Link>
-              </li>
-            </div>
-          </ul>
           <div
             className="block text-3xl text-white lg:hidden"
             onClick={() => setNav(!nav)}
           >
-            {!nav ? <CiMenuBurger /> : <TfiClose />}
+            {!nav ? <IoMenuOutline /> : <IoClose />}
           </div>
+          <Link to="/" className="flex items-center text-xl font-bold ">
+            <div className="w-11 mx-1 rounded-full">
+              <img alt="Tailwind CSS Navbar component" src="/bplip2.jpeg" />
+            </div>
+            <h1 className="text-red-500 rubik-text">Blip Trading</h1>
+          </Link>
+          <ul
+            onClick={() => setNav(!nav)}
+            className={`absolute details top-[63px] transition-all duration-150  z-20 bg-black items-center  left-0 py-5 h-0 ${
+              nav ? "h-72 max-h-72 overflow-y-auto w-9/12" : "h-0 w-0"
+            }`}
+          >
+            {nav && (
+              <div className="flex flex-col mx-2 text-lg h-96">
+                <li className="flex my-2 items-center font-thin  w-auto p-2 text-white bg-black  rounded-sm cursor-pointer">
+                  <Link to="/profile/settings" className="flex items-center">
+                    <IoSettingsOutline className="mr-2" /> My Account
+                  </Link>
+                </li>
+                <li className="flex my-1 items-center font-thin  bg-black   w-44 p-2 text-white rounded-sm cursor-pointer">
+                  <Link to="/profile/orders" className="flex items-center">
+                    <LuPackage2 size={20} className="mr-2" /> Orders
+                  </Link>
+                </li>
+                {!isLoggedIn ? (
+                  <li className="flex my-1 items-center font-normal mx-auto w-full  bg-black    text-white rounded-sm cursor-pointer">
+                    <a className="flex w-full justify-center p-2  bg-red-500 text-white items-center">
+                      LOG OUT
+                    </a>
+                  </li>
+                ) : (
+                  <li className="flex my-1 items-center font-normal mx-auto w-full  bg-black    text-white rounded-sm cursor-pointer">
+                    <a className="flex w-full justify-center p-2  bg-red-500 text-white items-center">
+                      REGISTER
+                    </a>
+                  </li>
+                )}
+                <li className="h-8 border-t font-thin border-t-gray-700 w-full">
+                  <span className="mx-3 ">CATEGORIES</span>
+                </li>
+                <li className="flex items-center font-thin w-auto p-2 text-white bg-black  rounded-sm cursor-pointer">
+                  <Link to="/profile/settings" className="flex items-center">
+                    <IoBasketOutline className="mr-1" /> Latest Products
+                  </Link>
+                </li>
+                <li className="flex items-center font-thin w-auto p-2 text-white bg-black  rounded-sm cursor-pointer">
+                  <Link
+                    to="/category/electronics"
+                    className="flex items-center"
+                  >
+                    <HiOutlineDesktopComputer className="mr-1" /> Electronics
+                  </Link>
+                </li>
+                <li className="flex  items-center font-thin  bg-black   w-44 p-2 text-white rounded-sm cursor-pointer">
+                  <Link to="/category/fashion" className="flex items-center">
+                    <GiClothes size={20} className="mr-2" /> Fashion
+                  </Link>
+                </li>
+                <li className="flex  items-center font-thin  bg-black   w-44 p-2 text-white rounded-sm cursor-pointer">
+                  <Link to="/category/home-decor" className="flex items-center">
+                    <PiBuildingApartmentLight size={20} className="mr-2" /> Home
+                    Decor
+                  </Link>
+                </li>
+              </div>
+            )}
+          </ul>
+
+          <div className="">
+            <Link to="/cart" className="flex items-center">
+              <AiOutlineShoppingCart size={25} className="text-red-500 " />
+              <span className="relative flex items-center justify-center w-4 h-4 text-xs text-white rounded-full right-2 bg-stone-700 bottom-2">
+                {cartArray.length}
+              </span>
+            </Link>
+          </div>
+          <Link to="/accounts/login">
+            <AiOutlineUser className="text-red-500 " size={25} />
+          </Link>
         </div>
       </nav>
     </>
