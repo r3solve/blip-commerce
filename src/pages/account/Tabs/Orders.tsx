@@ -1,4 +1,3 @@
-import React from "react";
 
 function Orders() {
   // Sample data for orders (you can replace this with your actual data)
