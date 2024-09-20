@@ -15,7 +15,7 @@ import AccountPage from '../account/Tabs/AccountPage';
 import Orders from '../account/Tabs/Orders';
 import LogoutPage from '../auth/LogoutPage';
 import ProtectedRoute from './ProtectedRoute';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function RoutesLayout() {
 const [isAuthenticated, setAuthenticated] = useState(false);
