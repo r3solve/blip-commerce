@@ -9,12 +9,7 @@ function DashboardTab() {
       <div className="w-full">
         <div className="flex mt-2 flex-row">
           <button
-            onClick={() => {
-              const modal = document.getElementById("my_modal_5");
-              if (modal) {
-                modal?.showModal();
-              }
-            }}
+            
             className="btn  mx-2 text-white btn-success"
           >
             <IoBagAddSharp />
